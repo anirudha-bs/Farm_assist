@@ -1,0 +1,43 @@
+
+<!DOCTYPE html>
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+<html lang="en">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+<title>Farm Assist</title>
+</head>
+ 
+<body>
+<h1 style="text-align:center">
+    Farm-assist
+</h1>
+
+<div class="weather" style="margin-bottom: 3em;">
+<a class="weatherwidget-io" href="https://forecast7.com/en/12d9777d59/bengaluru/" data-label_1="BANGALORE" data-label_2="WEATHER" data-theme="original" >BANGALORE WEATHER</a>
+
+<script>
+!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
+</script>
+</div>
+
+<div class="news" style="margin-bottom: 3em;">
+
+<h1 style="text-align:center"> Upload soil image to to get suggestions </h1>
+         
+         <form action="{{url_for("red")}}">
+         <div style="text-align:center">
+         <button style="text-align:center" class="w3-button w3-black" type="submit"> Suggest crops </button>
+         </div>
+         </form>
+</div>         
+
+
+<rssapp-wall id="LO9XVrzcrCd4AhB9"></rssapp-wall><script src="https://widget.rss.app/v1/wall.js" type="text/javascript" async></script>
+
+</body>
+</html>
+
+

@@ -1,0 +1,29 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <h1 style="text-align:center"> Suggestions </h1>
+  <body style="background-color:lightgrey;">
+
+  {% for weather in weather_data %}
+  <h2>
+  Types of crops that can be grown in {{soil}} with an average temperature of {{ weather.temperature }}°F and {{ weather.description }} are -
+  </h2>
+  {% endfor %}
+
+
+  <img src="{{ predicted_path }}" alt="Predicted image">
+ 
+  <ul>{% if crop_types|length %}
+      <li>
+          No crops can be grown in this type of soil or weather conditions
+      </li>
+      {% else %}
+      {% for crop in crop_types %}
+      <li>
+          {{crop}}
+      </li>
+      {% endfor %}
+      {% endif %}
+  </ul>
+  </body>
+</html>
