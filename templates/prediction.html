@@ -6,14 +6,14 @@
 
   {% for weather in weather_data %}
   <h2>
-  Types of crops that can be grown in {{soil}} with an average temperature of {{ weather.temperature }}°F and {{ weather.description }} are -
+  Types of crops that can be grown in {{city}} in the {{soil}} with an average temperature of {{ weather.temperature }}°F and {{ weather.description }} are -
   </h2>
   {% endfor %}
 
 
   <img src="{{ predicted_path }}" alt="Predicted image">
  
-  <ul>{% if crop_types|length %}
+  <ul>{% if not crop_types %}
       <li>
           No crops can be grown in this type of soil or weather conditions
       </li>

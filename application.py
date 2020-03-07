@@ -10,12 +10,13 @@ from flask import *
 
 engine = create_engine("postgresql://postgres:abs%40aspire@localhost/testdb")
 db = scoped_session(sessionmaker(bind=engine))
-UPLOAD_FOLDER = '/home/anirudha/test_upload/'
+UPLOAD_FOLDER = '/home/anirudha/Projects/Farm_assist/'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 name = None
 min_temp=int()
 max_temp=int()
 weather_data= []
+city = ""
 
 app = Flask(__name__)
 
@@ -31,6 +32,8 @@ def red():
 def success():  
     if request.method == 'POST':  
         f = request.files['file']  
+        global city
+        city=request.form.get("city")
         f.save(f.filename)
         global name
         name = UPLOAD_FOLDER + f.filename
@@ -58,18 +61,16 @@ def predict():
     plt.title(soil)
     path='static/predicted.jpeg'
     plt.savefig(path)
-
-    new_city=''
-    if request.method == 'POST':
-       new_city = str(request.form.get("city"))
+    
+    global city
 
     url = 'http://api.openweathermap.org/data/2.5/weather?q={}&units=imperial&appid=271d1234d3f497eed5b1d80a07b3fcd1'
 
-    r = requests.get(url.format('Bangalore')).json()
+    r = requests.get(url.format(city)).json()
     global weather_data
 
     weather = {
-        'city': new_city,
+        'city': city,
         'temperature': r['main']['temp'],
         'description': r['weather'][0]['description'],
         'icon': r['weather'][0]['icon'],
@@ -86,7 +87,7 @@ def predict():
     crop_types = db.execute("select crop from soildb where soil_type = :id1 and temp_min <= :id2 and temp_max >= :id3",{"id1": soil, "id2": min_temp, "id3": max_temp}).fetchall()
 
 
-    return render_template('prediction.html',soil=soil,crop_types=crop_types,predicted_path = path,weather_data=weather_data)
+    return render_template('prediction.html',soil=soil,crop_types=crop_types,predicted_path = path,weather_data=weather_data,city=city)
   
 if __name__ == '__main__':  
     app.run(debug = True)  
