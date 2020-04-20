@@ -1,29 +1,71 @@
 
 <!DOCTYPE html>
 <html lang="en">
+<head>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
   <h1 style="text-align:center"> Suggestions </h1>
-  <body style="background-color:lightgrey;">
+  <body>
+
+  <div style="text-align: center;">
+    <img src="{{ predicted_path }}" alt="Predicted image">
+  </div>
+
+  <div style="margin-bottom: 1em;">
+  {% if soil=="Alluvial soil" %}
+  <h4 style="text-align:center">
+  {{soil}} is rich in Potash but may lack Ph
+  </h4>
+
+  {% elif soil=="Red soil" %}
+  <h4 style="text-align:center">
+  {{soil}} is rich in Fe, Al, Mg and organic matter but may lack Lime, Ph, Mn, N, Potash
+  </h4>
+
+  {% else %}
+  <h4 style="text-align:center">
+  {{soil}} is rich in Fe, Lime, Ca, K, Al & Mg but may lack N, Ph, & organic matter
+  </h4>
+  {% endif %}
+  </div>
 
   {% for weather in weather_data %}
-  <h2>
+  <div style="margin-bottom: 1em; text-align:center">
+  <h4>
   Types of crops that can be grown in {{city}} in the {{soil}} with an average temperature of {{ weather.temperature }}°F and {{ weather.description }} are -
-  </h2>
+</h4>
   {% endfor %}
+  </div>
 
+  {% if not crop_types %}
 
-  <img src="{{ predicted_path }}" alt="Predicted image">
- 
-  <ul>{% if not crop_types %}
-      <li>
-          No crops can be grown in this type of soil or weather conditions
-      </li>
-      {% else %}
-      {% for crop in crop_types %}
-      <li>
-          {{crop}}
-      </li>
-      {% endfor %}
-      {% endif %}
-  </ul>
+    No crops can be grown with this soil or weather conditions.
+
+  {% else %}
+
+  <br></br>
+  <table style="width: 50%; margin: auto;" class="table table-bordered">
+  <thead class="thead-dark">
+    <tr>
+      <th style="text-align: center;" scope="col">Crop type</th>
+      <th style="text-align: center;" scope="col">Minimum temperature</th>
+      <th style="text-align: center;" scope="col">Maximum temperature</th>
+      <th style="text-align: center;" scope="col">Average rainfall</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {% for crop in crop_types %}
+    <tr>
+      <td>{{crop.crop}}</td>
+      <td>{{crop.temp_min}}</td>
+      <td>{{crop.temp_max}}</td>
+      <td>{{crop.rainfall}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+ </table>
+   {% endif %}
+
   </body>
 </html>

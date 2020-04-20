@@ -1,21 +1,23 @@
-<html>  
-<head>  
-    
+<html>
+<head>
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <title>Upload image</title>
 
 </head>
-   
-<body style="background-color:lightgrey;">  
+
+<body style="background-color:lightgrey;">
     <div style="text-align:center">
     <h1 style="margin-bottom: 3em;"> Upload the image </h1>
-    <form action = "{{url_for("success")}}" method = "post" enctype="multipart/form-data">  
-        Choose image  <input type="file" name="file"  style="margin-bottom: 3em;" required/>  
-        Enter the city name  <input type="text" name="city"  style="margin-bottom: 3em;" required/>
+    <div style="text-align:center;">
+    <form action = "{{url_for("success")}}" method = "post" enctype="multipart/form-data">
+        Choose image  <input type="file" name="file" required/>
+        <br></br><br></br>
+        Enter the city name  <input type="text" name="city"  style="margin-bottom: 3em; text-align:center;" required/>
         <br>
-        <button style="text-align:center" class="w3-button w3-black" type="submit" value="Upload"> Upload </button>   
-    </form>  
+        <button style="text-align:center" class="w3-button w3-black" type="submit" value="Upload"> Upload </button>
+    </form>
     </div>
-</body>  
-</html>  
+</body>
+</html>
