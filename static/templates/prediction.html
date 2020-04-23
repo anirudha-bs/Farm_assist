@@ -39,7 +39,7 @@
       </li>
     </ul>
     <span class="navbar-text">
-        <a style="text-align:center" href="https://farmer.gov.in">
+        <a style="text-align:center" href="https://www.farmer.gov.in/">
         More details
         </a>
     </span>
@@ -50,32 +50,32 @@
   <body>
 
   <div style="text-align: center;">
-    <img src="{{ predicted_path }}" alt="Predicted image">
+    <img style="margin-bottom: 1em;" src="{{ predicted_path }}" alt="Predicted image" height=40% width=80%>
   </div>
 
   <div style="margin-bottom: 1em;">
   {% if soil=="Alluvial soil" %}
-  <h4 style="text-align:center">
+  <h5 style="text-align:center">
   {{soil}} is rich in Potash but may lack Ph
-  </h4>
+  </h5>
 
   {% elif soil=="Red soil" %}
-  <h4 style="text-align:center">
+  <h5 style="text-align:center">
   {{soil}} is rich in Fe, Al, Mg and organic matter but may lack Lime, Ph, Mn, N, Potash
-  </h4>
+  </h5>
 
   {% else %}
-  <h4 style="text-align:center">
+  <h5 style="text-align:center">
   {{soil}} is rich in Fe, Lime, Ca, K, Al & Mg but may lack N, Ph, & organic matter
-  </h4>
+  </h5>
   {% endif %}
   </div>
 
   {% for weather in weather_data %}
   <div style="margin-bottom: 1em; text-align:center">
-  <h4>
+  <h5>
   Types of crops that can be grown in {{city}} in the {{soil}} with an average temperature of {{ weather.temperature }}°F and {{ weather.description }} are -
-</h4>
+  </h5>
   {% endfor %}
   </div>
 
@@ -108,6 +108,7 @@
   </tbody>
  </table>
    {% endif %}
+   <br></br><br></br>
 
   </body>
 </html>
