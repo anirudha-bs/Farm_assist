@@ -7,10 +7,13 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from flask import *
 
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-engine = create_engine("DATABASE_URL")
+engine = create_engine("postgresql://postgres:abs%40aspire@localhost/testdb")
 db = scoped_session(sessionmaker(bind=engine))
-UPLOAD_FOLDER = 'UPLOAD_FOLDER'
+UPLOAD_FOLDER = '/home/anirudha/Projects/Farmers_assistant/static/uploaded_images/'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 name = None
 min_temp=int()
@@ -18,11 +21,21 @@ max_temp=int()
 weather_data= []
 city = ""
 
-app = Flask(__name__)
+
+app = Flask(__name__, template_folder='static/templates')
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 @app.route('/', methods = ['GET','POST'])
 def upload():
     return render_template('index.html')
+
+@app.route('/news', methods = ['GET','POST'])
+def news():
+    return render_template('news.html')
+
+@app.route('/schemes', methods = ['GET','POST'])
+def schemes():
+    return render_template('schemes.html')
 
 @app.route("/red")
 def red():
@@ -34,10 +47,16 @@ def success():
         f = request.files['file']
         global city
         city=request.form.get("city")
-        f.save(f.filename)
-        global name
-        name = UPLOAD_FOLDER + f.filename
-        return redirect(url_for('predict'))
+        if f and allowed_file(f.filename):
+            filename = secure_filename(f.filename)
+            f.save(os.path.join(UPLOAD_FOLDER,filename))
+       	    global name
+            name = UPLOAD_FOLDER + f.filename
+            return redirect(url_for('predict'))
+        else:
+            return "File format not supported"
+    else:
+        return "Get request not supported"
 
 @app.route('/predict', methods=['GET','POST'])
 def predict():
@@ -61,7 +80,7 @@ def predict():
     else:
         soil="Alluvial soil"
     plt.title(soil)
-    path='static/predicted.jpeg'
+    path='static/predicted_images/predicted.jpeg'
     plt.savefig(path)
 
     global city

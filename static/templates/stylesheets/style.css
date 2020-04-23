@@ -1,4 +1,5 @@
-h1{
+.display-4{
+	bgcolor: darkgrey;
 	text-align: center;
 }
 
@@ -15,8 +16,4 @@ h1{
 .centered {
 	margin-left: auto;
 	margin-right: auto;
-}
-
-#TORqzTS26fIhxq9v{
-	width: 50%
 }
