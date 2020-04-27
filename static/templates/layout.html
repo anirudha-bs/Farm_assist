@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Agribot</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='templates/stylesheets/style.css') }}">
+  <link href="https://fonts.googleapis.com/css?family=Dancing+Script&display=swap" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
+  <link rel="icon" type="img/png" href="{{ url_for('static', filename='images/icon-96.png') }}">
+
+</head>
+
+<body style="background-color:grey;">
+
+<h1 style="text-align:center; color:black; font-size:45px;">
+    Farmer's assistant
+</h1>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="margin-bottom: 3em;">
+  <a class="navbar-brand" href="">
+    <img src="/static/images/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
+  AgriBot
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarText">
+  <ul class="navbar-nav mr-auto">
+    <li class="nav-item active">
+       <a class="nav-link" href="{{ url_for('upload') }}">Home</a>
+    </li>
+    <li class="nav-item">
+       <a class="nav-link" href="https://visualize.data.gov.in/?inst=9ef84268-d588-465a-a308-a864a43d0070&embed=1" target="_blank">Daily prices</a>
+    </li>
+    <li class="nav-item">
+       <a class="nav-link" href="{{ url_for('news') }}">Agriculture news</a>
+    </li>
+    <li class="nav-item">
+       <a class="nav-link" href="{{ url_for('schemes') }}">Government schemes</a>
+    </li>
+    <li class="nav-item">
+       <a class="nav-link" id="installButton" href="#">Install as app</a>
+    </li>
+  </ul>
+  <span class="navbar-text">
+      <a style="text-align:center" href="https://www.farmer.gov.in/" target="_blank">
+      More details
+      </a>
+  </span>
+</div>
+</nav>
+
+<div style="margin-bottom: 3em;" class="weather";>
+<a class="weatherwidget-io" href="https://forecast7.com/en/12d9777d59/bengaluru/" data-label_1="BANGALORE" data-label_2="WEATHER" data-theme="gray" >BANGALORE WEATHER</a>
+<script>
+!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
+</script>
+</div>
+
+<div class="container">
+      {% block body %}
+
+      {% endblock %}
+</div>
+
+<script type="text/javascript" src="{{ url_for('static', filename='js/app.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/install.js') }}"></script>
+
+</body>
+</html>

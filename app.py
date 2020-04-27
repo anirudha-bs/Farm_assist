@@ -11,7 +11,7 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-engine = create_engine("postgresql://postgres:abs%40aspire@localhost/testdb")
+engine = create_engine(os.getenv("DATABASE_URL"))
 db = scoped_session(sessionmaker(bind=engine))
 UPLOAD_FOLDER = '/home/anirudha/Projects/Farmers_assistant/static/uploaded_images/'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
@@ -28,6 +28,10 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 @app.route('/', methods = ['GET','POST'])
 def upload():
     return render_template('index.html')
+
+@app.route('/service-worker.js')
+def sw():
+    return app.send_static_file('service-worker.js'), 200, {'Content-Type': 'text/javascript'}
 
 @app.route('/news', methods = ['GET','POST'])
 def news():
