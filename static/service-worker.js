@@ -4,7 +4,7 @@ var FILES_TO_CACHE = [
     './news',
     './schemes',
     './static/js/app.js',
-    './static/templates/stylesheets/style.css'
+    './static/stylesheets/style.css'
   ];
 
 self.addEventListener('install', function(event) {

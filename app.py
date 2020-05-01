@@ -11,9 +11,9 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-engine = create_engine(os.getenv("DATABASE_URL"))
+engine = create_engine("postgresql://postgres:abs%40aspire@localhost/testdb")
 db = scoped_session(sessionmaker(bind=engine))
-UPLOAD_FOLDER = '/home/anirudha/Projects/Farmers_assistant/static/uploaded_images/'
+UPLOAD_FOLDER = 'uploaded_images/'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 name = None
 min_temp=int()
@@ -22,7 +22,7 @@ weather_data= []
 city = ""
 
 
-app = Flask(__name__, template_folder='static/templates')
+app = Flask(__name__, template_folder='templates')
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 @app.route('/', methods = ['GET','POST'])
@@ -32,12 +32,16 @@ def upload():
 @app.route('/service-worker.js')
 def sw():
     return app.send_static_file('service-worker.js'), 200, {'Content-Type': 'text/javascript'}
+    
+@app.route('/manifest.json')
+def manf():
+    return app.send_static_file('manifest.json')
 
-@app.route('/news', methods = ['GET','POST'])
+@app.route('/news', methods = ['GET'])
 def news():
     return render_template('news.html')
 
-@app.route('/schemes', methods = ['GET','POST'])
+@app.route('/schemes', methods = ['GET'])
 def schemes():
     return render_template('schemes.html')
 
@@ -54,7 +58,7 @@ def success():
         if f and allowed_file(f.filename):
             filename = secure_filename(f.filename)
             f.save(os.path.join(UPLOAD_FOLDER,filename))
-       	    global name
+            global name
             name = UPLOAD_FOLDER + f.filename
             return redirect(url_for('predict'))
         else:
