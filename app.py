@@ -11,7 +11,7 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-engine = create_engine("postgresql://postgres:abs%40aspire@localhost/testdb")
+engine = create_engine(os.environ.get('DATABASE_URL'))
 db = scoped_session(sessionmaker(bind=engine))
 UPLOAD_FOLDER = 'uploaded_images/'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
