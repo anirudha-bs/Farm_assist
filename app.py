@@ -1,4 +1,5 @@
 import os
+import time
 import requests
 from flask import Flask, flash, request, redirect, url_for
 from matplotlib import pyplot as plt
@@ -18,7 +19,6 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 name = None
 min_temp=int()
 max_temp=int()
-weather_data= []
 city = ""
 
 
@@ -32,7 +32,7 @@ def upload():
 @app.route('/service-worker.js')
 def sw():
     return app.send_static_file('service-worker.js'), 200, {'Content-Type': 'text/javascript'}
-    
+
 @app.route('/manifest.json')
 def manf():
     return app.send_static_file('manifest.json')
@@ -57,9 +57,11 @@ def success():
         city=request.form.get("city")
         if f and allowed_file(f.filename):
             filename = secure_filename(f.filename)
+            filename = filename.split(".")
+            filename = filename[0] + str(time.time()) + "." + filename[1]
             f.save(os.path.join(UPLOAD_FOLDER,filename))
             global name
-            name = UPLOAD_FOLDER + f.filename
+            name = UPLOAD_FOLDER + filename
             return redirect(url_for('predict'))
         else:
             return "File format not supported"
@@ -73,6 +75,7 @@ def predict():
     from keras.preprocessing import image
     import h5py
 
+    os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
     model = tf.keras.models.load_model('soil_classifier.h5')
 
     global name
@@ -88,7 +91,7 @@ def predict():
     else:
         soil="Alluvial soil"
     plt.title(soil)
-    path='static/predicted_images/predicted.jpeg'
+    path='static/predicted_images/' + "predicted" + str(time.time()) + ".jpeg"
     plt.savefig(path)
 
     global city
@@ -111,12 +114,11 @@ def predict():
     min_temp = int(5 / 9 * (r['main']['temp_min'] - 32))
     max_temp = int(5 / 9 * (r['main']['temp_max'] - 32))
 
-    weather_data.append(weather)
 
     crop_types = db.execute("select crop,temp_min,temp_max,rainfall from soildb where soil_type = :id1 and temp_min <= :id2 and temp_max >= :id3",{"id1": soil, "id2": min_temp, "id3": max_temp}).fetchall()
 
 
-    return render_template('prediction.html',soil=soil,crop_types=crop_types,predicted_path = path,weather_data=weather_data,city=city)
+    return render_template('prediction.html',soil=soil,crop_types=crop_types,predicted_path = path,weather_data=weather,city=city)
 
 if __name__ == '__main__':
     app.run(debug = True)

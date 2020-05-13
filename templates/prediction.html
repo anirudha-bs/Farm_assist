@@ -8,7 +8,7 @@
   <div style="text-align: center;">
     <img style="margin-bottom: 1em;" src="{{ predicted_path }}" alt="Predicted image" height=40% width=80%>
   </div>
-
+  <br></br>
   <div style="margin-bottom: 1em;">
   {% if soil=="Alluvial soil" %}
   <h5 style="text-align:center">
@@ -27,12 +27,10 @@
   {% endif %}
   </div>
 
-  {% for weather in weather_data %}
   <div style="margin-bottom: 1em; text-align:center">
   <h5>
-  Types of crops that can be grown in {{city}} in the {{soil}} with an average temperature of {{ weather.temperature }}°F and {{ weather.description }} are -
+  Types of crops that can be grown in {{city}} in the {{soil}} with an average temperature of {{ weather_data.temperature }}°F and {{ weather_data.description }} are -
   </h5>
-  {% endfor %}
   </div>
 
   {% if not crop_types %}
