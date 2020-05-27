@@ -1,5 +1,4 @@
 # Farmer's Assistant - PWA
 
-A PWA called farmers assistant which predicts types of crops that could be grown in a particular soil using soil image classification and predictive analysis and also displays optimum conditions required by the crops to grow. 
-It also displays all the necessary information like weather forecast, agriculture related news, daily prices of agricultural commodities accros different markets using weather and government api's. 
-
+A progressive web app(PWA) called farmer's assistant which predicts types of crops that could be grown in a particular soil using soil image classification and predictive analysis and also tells optimum conditions to grow them.
+The app covers all the needs of farmers like agriculture related news, weather updates, government schemes, daily prices of different agricultural commodities in different markets, etc.
