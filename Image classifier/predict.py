@@ -3,10 +3,11 @@ import numpy as np
 from keras.preprocessing import image
 import h5py
 from matplotlib import pyplot as plt
+import os
 
+os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
 
-
-model = tf.keras.models.load_model('new_soil_classify.h5')
+model = tf.keras.models.load_model('soil_classifier.h5')
 
 
 image_path="red.jpg"

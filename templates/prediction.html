@@ -2,11 +2,13 @@
 
 {% block body %}
 
-  <h2 style="text-align:center"> Insights </h2>
-  <body>
+  <h1 style="text-align:center">Insights</h1>
+  <h2 style="text-align:center">&#8595;</h2><br></br>
 
+  <div class="row">
+    <div class="col">
   <div style="text-align: center;">
-    <img style="margin-bottom: 1em;" src="{{ predicted_path }}" alt="Predicted image" height=40% width=80%>
+    <img style="margin-bottom: 1em; width:70%;height:auto;" src="{{ predicted_path }}" alt="Predicted image">
   </div>
   <br></br>
   <div style="margin-bottom: 1em;">
@@ -27,9 +29,12 @@
   {% endif %}
   </div>
 
+    </div>
+
+  <div class="col">
   <div style="margin-bottom: 1em; text-align:center">
   <h5>
-  Types of crops that can be grown in {{city}} in the {{soil}} with an average temperature of {{ weather_data.temperature }}°F and {{ weather_data.description }} are -
+  Types of crops that can be grown in {{city}} in the {{soil}} with an average temperature of {{ weather_data.temperature }}°C and {{ weather_data.description }} are -
   </h5>
   </div>
 
@@ -40,7 +45,7 @@
   {% else %}
 
   <br></br>
-  <table style="width: 50%; margin: auto;" class="table table-bordered">
+  <table style="width: 50%; margin: auto; text-align:center;" class="table table-bordered">
   <thead class="thead-dark">
     <tr>
       <th style="text-align: center;" scope="col">Crop type</th>
@@ -63,5 +68,6 @@
  </table>
    {% endif %}
    <br></br><br></br>
-
+  </div>
+</div>
 {% endblock %}

@@ -96,7 +96,7 @@ def predict():
 
     global city
 
-    url = 'http://api.openweathermap.org/data/2.5/weather?q={}&units=imperial&appid=271d1234d3f497eed5b1d80a07b3fcd1'
+    url = 'http://api.openweathermap.org/data/2.5/weather?q={}&units=metric&appid=271d1234d3f497eed5b1d80a07b3fcd1'
 
     r = requests.get(url.format(city)).json()
     global weather_data
@@ -111,8 +111,8 @@ def predict():
     global min_temp
     global max_temp
 
-    min_temp = int(5 / 9 * (r['main']['temp_min'] - 32))
-    max_temp = int(5 / 9 * (r['main']['temp_max'] - 32))
+    min_temp = r['main']['temp_min']
+    max_temp = r['main']['temp_max']
 
 
     crop_types = db.execute("select crop,temp_min,temp_max,rainfall from soildb where soil_type = :id1 and temp_min <= :id2 and temp_max >= :id3",{"id1": soil, "id2": min_temp, "id3": max_temp}).fetchall()
